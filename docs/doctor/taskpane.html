@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Client-Side Settings Auto-Open</title><style>body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .status {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status.connected {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .status.disconnected {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .status.connecting {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+    .status.disabled {
+      background: #e2e3e5;
+      color: #383d41;
+      border: 1px solid #d6d8db;
+    }
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .status.connected .status-indicator {
+      background: #28a745;
+    }
+    .status.disconnected .status-indicator {
+      background: #dc3545;
+    }
+    .status.connecting .status-indicator {
+      background: #ffc107;
+      animation: pulse 1.5s infinite;
+    }
+    .status.disabled .status-indicator {
+      background: #6c757d;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+    }
+    h2 {
+      font-size: 18px;
+      color: #555;
+      margin-top: 0;
+    }
+    button {
+      background: #0078d4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background: #005a9e;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    button.secondary {
+      background: #6c757d;
+    }
+    button.secondary:hover {
+      background: #545b62;
+    }
+    .info {
+      background: #e7f3ff;
+      border-left: 4px solid #0078d4;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .log {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+    .log-entry {
+      margin: 2px 0;
+      padding: 4px;
+    }
+    .log-entry.received {
+      color: #0066cc;
+    }
+    .log-entry.sent {
+      color: #28a745;
+    }
+    .log-entry.error {
+      color: #dc3545;
+    }
+    .autoopen-status {
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .autoopen-status.enabled {
+      background: #d4edda;
+      color: #155724;
+    }
+    .autoopen-status.disabled {
+      background: #f8d7da;
+      color: #721c24;
+    }</style><script defer="defer" src="taskpane.bundle.js"></script></head><body><div class="container"><h1>🔌 Client-Side Settings Auto-Open</h1><div id="wsStatus" class="status disconnected"><span class="status-indicator"></span> <span id="wsStatusText">Disconnected</span></div><div class="card"><h2>Approach #1: User-Controlled Auto-Open</h2><div class="info">This approach allows users to enable/disable auto-open behavior using Office.js settings API. The setting is stored per-document and persists across sessions.</div><div><button id="enableAutoOpen">Enable Auto-Open</button> <button id="disableAutoOpen" class="secondary">Disable Auto-Open</button></div><div id="autoOpenStatus" class="autoopen-status disabled">Auto-Open: Disabled</div></div><div class="card"><h2>WebSocket Connection</h2><div><button id="reconnectBtn">Reconnect</button> <button id="clearLog" class="secondary">Clear Log</button></div><div class="log" id="log"></div></div><div class="card"><h2>How It Works</h2><ol><li>User clicks "Enable Auto-Open" button</li><li>Code sets <code>Office.AutoShowTaskpaneWithDocument = true</code></li><li>Setting is saved to the document</li><li>Next time document opens (and add-in is installed), task pane opens automatically</li><li>WebSocket connection establishes when pane opens</li></ol></div></div></body></html>
